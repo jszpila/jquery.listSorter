@@ -1,0 +1,310 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<style type="text/css">
+			* {
+				font-family: Helvetica, Arial, sans-serif;
+				color: #000;
+			}
+			
+			h1 {
+				font-size: 19pt;
+				line-height: 21pt;
+			}
+			
+			h2 {
+				font-size: 17pt;
+				line-height: 19pt;
+			}
+			
+			h3 {
+				font-size: 15pt;
+				line-height: 17pt;
+			}
+			
+			section, 
+			div, 
+			p, 
+			li, 
+			a {
+				font-size: 11pt;
+				line-height: 13pt;	
+			}
+
+			a {
+				color: #00F;
+			}
+			
+			header,
+			footer,
+			section {
+				clear: both;
+				display: block;
+			}
+			
+			.comment {
+				color: #999;
+				margin-left: 15px;
+				font-style: italic;
+			}
+			
+			.notes {
+				margin-left: 15px;
+			}
+			
+			.sortList {
+				display: block;
+				float: left;
+				width: 200px;
+				margin-right: 25px;
+			}
+			
+			/* styles for generated classes */
+			
+			.activeSortFilter {
+				border: solid 1px #00F;
+			}
+			
+			.sort_alpha_asc {
+				background-color: #CC0;
+			}
+			
+			.sort_alpha_desc {
+				background-color: #0CC;
+			}
+			
+			.sort_data-Rank_asc {
+				background-color: #FF0;
+			}
+			
+			.sort_data-Rank_desc {
+				background-color: #0FF;
+			}
+			
+			.sortRank_data-Rank_9 {
+				text-decoration: underline;
+			}
+			
+			.sortRank_alpha_A {
+				text-decoration: overline;	
+			}
+		</style>
+	</head>
+	
+	<body>
+		
+		<head>
+			<h1>jQuery &amp; HTML5 Custom List Sorter</h1>
+		</head>
+		
+		<section class="explanation">
+			<h2>What It Does</h2>
+			<p>
+				With this plugin, you'll be able to make lists sortable according to the list item's custom data attributes.	
+			</p>
+			
+			<h2>Usage</h2>
+			<p>
+				On DOM ready, use any of the following methods:
+			</p>
+			
+			<ul>
+				<li>$('.myContainerClass').listSorter(); <span class="comment"> // for all instances for a class</span></li>
+				<li>$('#myContainerElement').listSorter(); <span class="comment">// for a single element by ID</span></li>
+				<li>$('#myContainerElement1, #myContainerElement2').listSorter(); <span class="comment"> // for container elements with different IDs</span></li>
+			</ul>
+			
+			<h2>Requirements</h2>
+			<ul>
+				<li>jQuery (duh) - developed with 1.4.2</li>
+				<li>An element with the class .sortFilters that contain links used to control filtering:
+					<ul>
+						<li>Links that should trigger filtering <i>must</i> have the class .sortFilter</li>
+						<li>Filter control links <i>must</i> contain two data fields: data-SortByField and data-SortDirection
+							<ul>
+								<li><b>data-SortByField</b> must contain the name of the data field attribute of the list items in the list you wish to sort.</li>
+								<li><b>data-SortDirection</b> must contain either "asc" or "desc" as it's value.</li>
+							</ul>
+						</li>
+					</ul>
+				</li>
+				<li>A list with the class .sortList</li>
+				<li>Items in the of the sortable list must contain a data field attribute that matches those specified in the filters.</li>
+			</ul>
+				
+				<h3 class="notes">Notes:</h3> 
+				<ul class="notes">
+					<li>Alphabetical sort is accomplished by designating an empty string in the data-SortByField.</li>
+					<li>Contents of sort fields should be of same type.</li>
+				</ul>
+			
+			<h2>Generated Classes</h2>
+			<ul>
+				<li>.activeSortFilter - is applied to the link that applied the current sort.</li>
+				<li>.sort_[FIELD NAME]_[SORT DIRECTION] - is applied to the list and changes on each sort, where [FIELD NAME] is the field sorted by, and [SORT DIRECTION] is the sort direction.</li>
+				<li>.sortRank_[FIELD NAME]_[FIELD VALUE] - is applied to list items.</li>
+			</ul>
+			
+			<h3 class="notes">Notes:</h3> 
+			<ul class="notes">
+				<li>When sorting alphabetically, the value of [FIELD NAME] used in the generated classes will be "alpha".</li>
+				<li>When sorting alphabetically, the value of [FIELD VALUE] used in the generated classes with be the uppercase value of the first letter.</li>
+			</ul>
+		</section>
+		
+		
+		<section class="example">
+			<h2>Example #1</h2>
+			
+			<p>
+				Single list.
+			</p>
+			
+			<div class="sortFilters">
+				Sort: 
+				<a href="" class="sortFilter" title="Sort alphabetically (ascending)" data-SortByField="" data-SortDirection="asc">alphabetical (ascending)</a>,
+				<a href="" class="sortFilter" title="Sort alphabetically (descending)" data-SortByField="" data-SortDirection="desc">alphabetical (descending)</a>,
+				<a href="" class="sortFilter" title="Sort by data-Rank (ascending)" data-SortByField="data-Rank" data-SortDirection="asc">data-Rank (ascending)</a>,
+				<a href="" class="sortFilter" title="Sort by data-Rank (descending)" data-SortByField="data-Rank" data-SortDirection="desc">data-Rank (descending)</a>
+			</div> <!-- /sortFilters -->
+			
+			<ul class="sortList">
+				<li data-Rank="1">A, rank 1</li>
+				<li data-Rank="2">Z, rank 2</li>
+				<li data-Rank="3">C, rank 3</li>
+				<li data-Rank="6">J, rank 6</li>
+				<li data-Rank="7">N, rank 7</li>
+				<li data-Rank="9">F, rank 9</li>
+			</ul> <!-- /sortList -->
+			
+		</section>
+
+		<section class="example">
+			<h2>Example #2</h2>
+			
+			<p>
+				Multiple lists in the same container, with the same attributes.
+			</p>
+			
+			<div class="sortFilters">
+				Sort: 
+				<a href="" class="sortFilter" title="Sort alphabetically (ascending)" data-SortByField="" data-SortDirection="asc">alphabetical (ascending)</a>,
+				<a href="" class="sortFilter" title="Sort alphabetically (descending)" data-SortByField="" data-SortDirection="desc">alphabetical (descending)</a>,
+				<a href="" class="sortFilter" title="Sort by data-Rank (ascending)" data-SortByField="data-Rank" data-SortDirection="asc">data-Rank (ascending)</a>,
+				<a href="" class="sortFilter" title="Sort by data-Rank (descending)" data-SortByField="data-Rank" data-SortDirection="desc">data-Rank (descending)</a>
+			</div> <!-- /sortFilters -->
+			
+			<ul class="sortList">
+				<li data-Rank="1">A, rank 1</li>
+				<li data-Rank="2">Z, rank 2</li>
+				<li data-Rank="3">C, rank 3</li>
+				<li data-Rank="6">J, rank 6</li>
+				<li data-Rank="7">N, rank 7</li>
+				<li data-Rank="9">F, rank 9</li>
+			</ul> <!-- /sortList -->
+			
+			<ul class="sortList">
+				<li data-Rank="9">Foxtrot, 9</li>
+				<li data-Rank="1">Alfa, 1</li>
+				<li data-Rank="6">Juliet, 6</li>
+				<li data-Rank="2">Zulu, 2</li>
+				<li data-Rank="7">November, 7</li>
+				<li data-Rank="3">Charlie, 3</li>
+			</ul> <!-- /sortList -->
+			
+		</section>
+
+		<section id="Example3" class="example">
+			<h2>Example #3</h2>
+			
+			<p>
+				Single list called by ID.
+			</p>
+			
+			<div class="sortFilters">
+				Sort: 
+				<a href="" class="sortFilter" title="Sort alphabetically (ascending)" data-SortByField="" data-SortDirection="asc">alphabetical (ascending)</a>,
+				<a href="" class="sortFilter" title="Sort alphabetically (descending)" data-SortByField="" data-SortDirection="desc">alphabetical (descending)</a>,
+				<a href="" class="sortFilter" title="Sort by rank (ascending)" data-SortByField="data-Rank" data-SortDirection="asc">rank (ascending)</a>,
+				<a href="" class="sortFilter" title="Sort by rank (descending)" data-SortByField="data-Rank" data-SortDirection="desc">rank (descending)</a>
+			</div> <!-- /sortFilters -->
+			
+			<ul class="sortList">
+				<li data-Rank="1">A, rank 1</li>
+				<li data-Rank="2">Z, rank 2</li>
+				<li data-Rank="3">C, rank 3</li>
+				<li data-Rank="6">J, rank 6</li>
+				<li data-Rank="7">N, rank 7</li>
+				<li data-Rank="9">F, rank 9</li>
+			</ul> <!-- /sortList -->
+			
+		</section>
+
+		<section id="Example3A" class="example">
+			<h2>Example #3A</h2>
+			
+			<p>
+				Single list called by ID in same invocation as Example 3, with multiple data attribute sorting and mixed-data values.
+			</p>
+			
+			<div class="sortFilters">
+				Sort: 
+				<a href="" class="sortFilter" title="Sort alphabetically (ascending)" data-SortByField="" data-SortDirection="asc">alphabetical (ascending)</a>,
+				<a href="" class="sortFilter" title="Sort alphabetically (descending)" data-SortByField="" data-SortDirection="desc">alphabetical (descending)</a>,
+				<a href="" class="sortFilter" title="Sort by data-Rank (ascending)" data-SortByField="data-Rank" data-SortDirection="asc">data-Rank (ascending)</a>,
+				<a href="" class="sortFilter" title="Sort by data-Rank (descending)" data-SortByField="data-Rank" data-SortDirection="desc">data-Rank (descending)</a>,
+				<a href="" class="sortFilter" title="Sort by data-TestVal (ascending)" data-SortByField="data-TestVal" data-SortDirection="asc">data-TestVal (ascending)</a>,
+				<a href="" class="sortFilter" title="Sort by data-TestVal (descending)" data-SortByField="data-TestVal" data-SortDirection="desc">data-TestVal (descending)</a>
+			</div> <!-- /sortFilters -->
+			
+			<ul class="sortList">
+				<li data-Rank="1" data-TestVal="1A">A, rank 1, TestVal 1A</li>
+				<li data-Rank="2" data-TestVal="M3">Z, rank 2, TestVal 2C</li>
+				<li data-Rank="3" data-TestVal="1B">C, rank 3, TestVal 1B</li>
+				<li data-Rank="6" data-TestVal="C9">J, rank 6, TestVal 3B</li>
+				<li data-Rank="7" data-TestVal="Z">N, rank 7, TestVal 1</li>
+				<li data-Rank="9" data-TestVal="0">F, rank 9, TestVal 0</li>
+			</ul> <!-- /sortList -->
+			
+			<ul class="sortList">
+				<li data-Rank="6" data-TestVal="B">Juliet, 6, B</li>
+				<li data-Rank="9" data-TestVal="A">Foxtrot, 9, A</li>
+				<li data-Rank="2" data-TestVal="BB">Zulu, 2, BB</li>
+				<li data-Rank="1" data-TestVal="AA">Alfa, 1, AA</li>
+				<li data-Rank="7" data-TestVal="lorem ipsum">November, 7, lorem ipsum</li>
+				<li data-Rank="3" data-TestVal="B1">Charlie, 3, B1</li>
+			</ul> <!-- /sortList -->
+			
+			<ul class="sortList">
+				<li data-Rank="9" data-TestVal="">Foxtrot, 9, empty</li>
+				<li data-Rank="1" data-TestVal="1">Alfa, 1, 1</li>
+				<li data-Rank="6" data-TestVal="0">Juliet, 6, 0</li>
+				<li data-Rank="2" data-TestVal="">Zulu, 2, empty</li>
+				<li data-Rank="7" data-TestVal="3">November, 7, 3</li>
+				<li data-Rank="3" data-TestVal="2">Charlie, 3, 3</li>
+			</ul> <!-- /sortList -->
+			
+		</section>
+		
+		<footer>
+			Made by <a href="http://www.janszpila.com" title="Made by Jan Szpila" target="_blank">Jan Szpila</a>.<br/>
+			Licensed under <a href="http://creativecommons.org/licenses/by-sa/3.0/" title="Creative Commons Attribution-ShareAlike 3.0 Unported License" target="_blank">Creative Commons Attribution-ShareAlike 3.0 Unported License</a>
+		</footer>
+
+		<script type="text/javascript" language="javascript" src="http://www.google.com/jsapi"></script>
+		<script type="text/javascript" language="javascript">
+  			google.load("jquery", "1.4.2");
+		</script>
+		
+  		<script type="text/javascript" language="javascript" src="jquery.listSorter.js"></script>
+  		
+  		<script type="text/javascript" language="javascript">
+  			
+  			$(function(){
+  				$('.example').listSorter();
+  				$('#Example 3, #Example3A').listSorter();	
+  			});
+  		</script>
+  		
+	</body>
+</html>
